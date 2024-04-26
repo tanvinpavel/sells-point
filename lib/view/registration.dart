@@ -34,6 +34,7 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
+  var isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _name = TextEditingController();
@@ -52,109 +53,116 @@ class _RegistrationFormState extends State<RegistrationForm> {
         key: _formKey,
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    controller: _name,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Name'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your name.';
-                      }
-                      // You can add more complex email validation logic here if needed
-                      return null;
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    controller: _email,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Email'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your email address.';
-                      }
-                      if (!_emailRegex.hasMatch(value)) {
-                        return 'Email address is not valid';
-                      }
-                      return null;
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    controller: _password,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Password'),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a password.';
-                      }
-                      return null;
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    controller: _renterPassword,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Renter Password'),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please renter a password.';
-                      }
-                      if (_password.text != value) {
-                        return 'Password not match';
-                      }
-                      return null;
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: _submitForm,
-                  child: Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: const Center(
-                      child: Text(
-                        "Registration",
-                        style: TextStyle(color: Colors.white),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      controller: _name,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: 'Name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your name.';
+                        }
+                        // You can add more complex email validation logic here if needed
+                        return null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      controller: _email,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: 'Email'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your email address.';
+                        }
+                        if (!_emailRegex.hasMatch(value)) {
+                          return 'Email address is not valid';
+                        }
+                        return null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      controller: _password,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: 'Password'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a password.';
+                        }
+                        return null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      controller: _renterPassword,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Renter Password'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please renter a password.';
+                        }
+                        if (_password.text != value) {
+                          return 'Password not match';
+                        }
+                        return null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: _submitForm,
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Center(
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3,
+                              )
+                            : const Text(
+                                "Registration",
+                                style: TextStyle(color: Colors.white),
+                              ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      child: const Text(
-                        "Already have an account? Login here",
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        child: const Text(
+                          "Already have an account? Login here",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
+                        onTap: () => Navigator.of(context)
+                            .pushNamedAndRemoveUntil(route.loginPage,
+                                (Route<dynamic> route) => false),
                       ),
-                      onTap: () => Navigator.of(context)
-                          .pushNamedAndRemoveUntil(
-                              route.loginPage, (Route<dynamic> route) => false),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -163,12 +171,19 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       final response = await http.post(
         Uri.parse('$baseURL/auth/signup'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({'name': _name.text, 'email': _email.text, 'password': _password.text}),
+        body: jsonEncode({
+          'name': _name.text,
+          'email': _email.text,
+          'password': _password.text
+        }),
       );
 
       if (response.statusCode == 200) {
@@ -188,6 +203,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
           const SnackBar(content: Text('This email already have an account.')),
         );
       }
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 }

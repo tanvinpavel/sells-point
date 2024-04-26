@@ -28,86 +28,6 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-// class LoginForm extends StatefulWidget {
-//   @override
-//   _LoginFormState createState() => _LoginFormState();
-// }
-
-// class _LoginFormState extends State<LoginForm> {
-//   final _formKey = GlobalKey<FormState>();
-//   late String _email;
-//   late String _password;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Form(
-//       key: _formKey,
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: <Widget>[
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-//             child: TextFormField(
-//               decoration: const InputDecoration(
-//                 border: OutlineInputBorder(),
-//                 labelText: 'Email',
-//               ),
-//               validator: (value) {
-//                 if (value!.isEmpty) {
-//                   return 'Please enter your email.';
-//                 }
-//                 return null;
-//               },
-//               onSaved: (value) {
-//                 _email = value!;
-//               },
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-//             child: TextFormField(
-//               obscureText: true,
-//               decoration: const InputDecoration(
-//                 border: OutlineInputBorder(),
-//                 labelText: 'Password',
-//               ),
-//               validator: (value) {
-//                 if (value!.isEmpty) {
-//                   return 'Please enter your password.';
-//                 }
-//                 return null;
-//               },
-//               onSaved: (value) {
-//                 _password = value!;
-//               },
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-//             child: ElevatedButton(
-//               onPressed: _submitForm(),
-//               child: const Text('Submit'),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   _submitForm() {
-//     _formKey.currentState!.save();
-//     if (_formKey.currentState!.validate()) {
-//       // Save the form fields' values
-//       // You can now use the form data (_name, _email, _password, _confirmPassword) as needed
-//       print('Email: $_email');
-//       print('Name: $_password');
-//       // print('Password: $_password');
-//       // print('Confirm Password: $_confirmPassword');
-//       // Perform registration logic here (e.g., send data to a server)
-//     }
-//   }
-// }
-
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -238,8 +158,13 @@ class _LoginFormState extends State<LoginForm> {
         prefs.setString('userInfo_', dataString);
         prefs.setString('isLoggedIn_', 'true');
 
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            route.homePage, (Route<dynamic> route) => false);
+        if (data.role == '8274') {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              route.adminPage, (Route<dynamic> route) => false);
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              route.homePage, (Route<dynamic> route) => false);
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Wrong email and password.')),

@@ -1,3 +1,4 @@
+import 'package:FlutterProjectp/view/admin.dart';
 import 'package:FlutterProjectp/view/auth.dart';
 import 'package:FlutterProjectp/view/myPosts.dart';
 import 'package:FlutterProjectp/view/registration.dart';
@@ -7,6 +8,7 @@ import 'package:FlutterProjectp/view/home.dart';
 import 'package:FlutterProjectp/view/login.dart';
 
 const String authPage = 'auth';
+const String adminPage = 'admin';
 const String loginPage = 'login';
 const String homePage = 'page';
 const String postsPage = 'posts';
@@ -16,6 +18,8 @@ MaterialPageRoute controller(RouteSettings settings) {
   switch (settings.name) {
     case authPage:
       return MaterialPageRoute<dynamic>(builder: (context) => Auth());
+    case adminPage:
+      return MaterialPageRoute<dynamic>(builder: (context) => AdminPage());
     case loginPage:
       return MaterialPageRoute<dynamic>(builder: (context) => LoginPage());
     case registrationPage:

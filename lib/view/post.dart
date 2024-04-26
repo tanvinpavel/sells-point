@@ -79,63 +79,65 @@ class _PostState extends State<Post> {
         inAsyncCall: isUploading,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 20),
-              // _image != null
-              //     ? Image.file(
-              //         _image!,
-              //         height: 150,
-              //         fit: BoxFit.cover,
-              //       )
-              //     : ElevatedButton(
-              //         onPressed: _getImage,
-              //         child: Text('Add Image'),
-              //       ),
-              registrationImage != null
-                  ? Image.memory(
-                      registrationImage!,
-                      fit: BoxFit.cover,
-                      height: 150,
-                    )
-                  : ElevatedButton(
-                      onPressed: _getImage,
-                      child: Text('Add Image'),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 20),
+                // _image != null
+                //     ? Image.file(
+                //         _image!,
+                //         height: 150,
+                //         fit: BoxFit.cover,
+                //       )
+                //     : ElevatedButton(
+                //         onPressed: _getImage,
+                //         child: Text('Add Image'),
+                //       ),
+                registrationImage != null
+                    ? Image.memory(
+                        registrationImage!,
+                        fit: BoxFit.cover,
+                        height: 150,
+                      )
+                    : ElevatedButton(
+                        onPressed: _getImage,
+                        child: Text('Add Image'),
+                      ),
+                TextField(
+                  controller: _postController,
+                  decoration: const InputDecoration(labelText: 'Post'),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: _price,
+                  decoration: const InputDecoration(labelText: 'Price'),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _isPrivate,
+                      onChanged: (value) {
+                        setState(() {
+                          _isPrivate = value ?? false;
+                        });
+                      },
                     ),
-              TextField(
-                controller: _postController,
-                decoration: const InputDecoration(labelText: 'Post'),
-                maxLines: null,
-              ),
-              TextField(
-                controller: _price,
-                decoration: const InputDecoration(labelText: 'Price'),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _isPrivate,
-                    onChanged: (value) {
-                      setState(() {
-                        _isPrivate = value ?? false;
-                      });
-                    },
-                  ),
-                  Text('Private'),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: const Text('Submit'),
-              ),
-            ],
+                    Text('Private'),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _uploadImage,
+                  child: const Text('Submit'),
+                ),
+              ],
+            ),
           ),
         ));
   }
