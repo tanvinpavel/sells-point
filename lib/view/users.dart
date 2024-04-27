@@ -66,8 +66,10 @@ class _UsersState extends State<Users> {
       String token = userDataParse['accessToken'];
       String role = userDataParse['role'];
 
+      print('role $role');
+
       final response = await http.delete(
-        Uri.parse('$baseURL/user/delete?id=$UserId'),
+        Uri.parse('$baseURL/user/delete/$UserId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
@@ -122,7 +124,8 @@ class _UsersState extends State<Users> {
                                           TextButton(
                                             child: const Text("Delete"),
                                             onPressed: () async {
-                                              await deleteUser(userList[index].sId, index);
+                                              await deleteUser(
+                                                  userList[index].sId, index);
                                             },
                                           ),
                                         ],

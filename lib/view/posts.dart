@@ -15,6 +15,7 @@ class Posts extends StatefulWidget {
 
 class _PostsState extends State<Posts> {
   Map<String, dynamic>? paymentIntent;
+  
   List<PostModal> postList = [];
 
   final baseURL = dotenv.env['BASE_API'];
@@ -60,8 +61,16 @@ class _PostsState extends State<Posts> {
             child: FutureBuilder(
                 future: getUsersApi(),
                 builder: (content, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.isNotEmpty) {
+                  var data = snapshot.data;
+                  if (data == null) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    var datalength = data.length;
+                    if (datalength == 0) {
+                      return const Center(
+                        child: Text('no data found'),
+                      );
+                    } else {
                       return ListView.builder(
                           itemCount: postList.length,
                           itemBuilder: (context, index) {
@@ -129,20 +138,7 @@ class _PostsState extends State<Posts> {
                               ),
                             );
                           });
-                    } else {
-                      return const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [Text('Document not found')],
-                          )
-                        ],
-                      );
                     }
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
                   }
                 })),
       ],
@@ -258,8 +254,6 @@ class _PostsState extends State<Posts> {
       //Request body
       final prefs = await SharedPreferences.getInstance();
       final String? authData = prefs.getString('userInfo_');
-
-      print('confirmPurchase');
 
       if (authData != null) {
         Map<String, dynamic> userDataParse = jsonDecode(authData);

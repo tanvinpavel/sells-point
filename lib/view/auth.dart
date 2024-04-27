@@ -22,25 +22,31 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue, // Change the color to your desired color
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Loading...',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24.0,
-                ),
-              ),
-            ],
-          ),
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-      ),
-    );
+        home: Scaffold(
+          body: Container(
+            color: Colors.blue, // Change the color to your desired color
+            child: const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Loading...',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   // void authChecker() async {

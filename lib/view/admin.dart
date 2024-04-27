@@ -19,7 +19,7 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   _changeTab(int index) async {
-    if (index == 4) {
+    if (index == 3) {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove("userInfo_");
       prefs.remove("isLoggedIn_");
